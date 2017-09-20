@@ -18,6 +18,6 @@ run:
         - lava-test-case test-cd --shell cd
         - lava-test-case test-touch --shell touch /home/root/testfile
         - lava-test-case test-mkdir --shell mkdir /home/root/testdir
-        - lava-test-case test-cp --shell cp /home/root/testfile /home/root/testdir/testfile2
+        - lava-test-case test-cp --shell cp /home/root/testfile /home/root/testdir/testfile
         - lava-test-case test-mv --shell mv /home/root/testdir/testfile /home/root/testdir/testfile2
         - lava-test-case test-rm --shell rm -rf /home/root/testdir
