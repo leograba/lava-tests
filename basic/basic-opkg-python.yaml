@@ -1,0 +1,24 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: opkg-install-python
+    description: "Test ls command"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx7
+
+run:
+    steps:
+        - ping -c 4 8.8.8.8
+        - ping -c 4 google.com
+        - opkg update
+        - opkg install python-dev
+        - lava-test-case py-hello-world python ./hello.py
