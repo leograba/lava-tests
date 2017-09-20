@@ -15,9 +15,9 @@ metadata:
         - colibri-imx6
         - colibri-imx7
 
-install:
-    git-repos:
-        - https://github.com/leograba/lava-tests.git
+#install:
+#    git-repos:
+#        - https://github.com/leograba/lava-tests.git
 
 
 run:
