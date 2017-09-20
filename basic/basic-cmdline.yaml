@@ -1,6 +1,6 @@
 metadata:
     format: Lava-Test Test Definition 1.0
-    name: test-ls-command
+    name: test-basic-commands
     description: "Test ls command"
     maintainer:
         - leogveiga@gmail.com
