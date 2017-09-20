@@ -15,10 +15,12 @@ metadata:
         - colibri-imx6
         - colibri-imx7
 
-run:
-    install:
-      git-repos:
+install:
+    git-repos:
         - https://github.com/leograba/lava-tests.git
+
+
+run:
     steps:
         - ./lava-tests/hello.sh
       
