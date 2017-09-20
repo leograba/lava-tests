@@ -1,0 +1,23 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: test-ls-command
+    description: "Test ls command"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - colibri-imx6
+
+run:
+    steps:
+        - lava-test-case test-ls --shell ls
+        - lava-test-case test-pwd --shell pwd
+        - lava-test-case test-cd --shell cd
+        - lava-test-case test-touch --shell touch /home/root/testfile
+        - lava-test-case test-mkdir --shell mkdir /home/root/testdir
+        - lava-test-case test-cp --shell cp /home/root/testfile /home/root/testdir/testfile2
+        - lava-test-case test-mv --shell mv /home/root/testdir/testfile /home/root/testdir/testfile2
+        - lava-test-case test-rm --shell rm -rf /home/root/testdir
