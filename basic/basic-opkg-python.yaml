@@ -17,6 +17,8 @@ metadata:
 
 run:
     steps:
+        - opkg --help
+        - ifconfig
         - ping -c 4 8.8.8.8
         - ping -c 4 google.com
         - opkg update
