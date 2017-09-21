@@ -23,6 +23,6 @@ metadata:
 run:
     steps:
         - pwd
-        - find / -name "hello.sh"
-        - ./basic/hello.sh
+        - find / -name "hello.sh" | grep "basic-shell-script"
+        - $(find / -name "hello.sh" | grep "basic-shell-script")
       

@@ -60,11 +60,11 @@
           from: git
           path: basic/basic-shell-script.yaml
           name: basic-shell-script
-        - repository: https://github.com/leograba/lava-tests.git
-          from: git
-          path: basic/basic-opkg.yaml
-          name: test-opkg
-        - repository: https://github.com/leograba/lava-tests.git
-          from: git
-          path: basic/basic-opkg-python.yaml
-          name: opkg-install-python
+#        - repository: https://github.com/leograba/lava-tests.git
+#          from: git
+#          path: basic/basic-opkg.yaml
+#          name: test-opkg
+#        - repository: https://github.com/leograba/lava-tests.git
+#          from: git
+#          path: basic/basic-opkg-python.yaml
+#          name: opkg-install-python
