@@ -23,6 +23,9 @@ metadata:
 run:
     steps:
         - pwd
+        - ls
+        - ls basic
+        - ls -l /lava*/0/tests/2_basic-shell-script/basic/hello.sh
         - find / -name "hello.sh" | grep "basic-shell-script"
         - $(find / -name "hello.sh" | grep "basic-shell-script")
       
