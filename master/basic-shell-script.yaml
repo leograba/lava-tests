@@ -1,5 +1,5 @@
     device_type: apalis-imx6
-    job_name: CI Automated Test - Toradex ARM OpenEmbedded pipeline, OE image NFS deploy test
+    job_name: Basic shell script test execution
 
     timeouts:
       job:
@@ -12,7 +12,7 @@
     visibility: public
 
     metadata:
-      docs-filename: ci-auto-test_tdx-oe-nfs.yaml
+      docs-filename: basic-shell.yaml
 
     # ACTION_BLOCK
     actions:
@@ -48,23 +48,12 @@
         timeout:
           minutes: 5
         definitions:
-        - repository: https://github.com/leograba/lava-tests.git
-          from: git
-          path: basic/basic-ls.yaml
-          name: test-ls-command
-        - repository: https://github.com/leograba/lava-tests.git
-          from: git
-          path: basic/basic-cmdline.yaml
-          name: test-basic-commands
+#        - repository: https://github.com/leograba/lava-tests.git
+#          from: git
+#          path: basic/basic-cmdline.yaml
+#          name: test-basic-commands
         - repository: https://github.com/leograba/lava-tests.git
           from: git
           path: basic/basic-shell-script.yaml
           name: basic-shell-script
-#        - repository: https://github.com/leograba/lava-tests.git
-#          from: git
-#          path: basic/basic-opkg.yaml
-#          name: test-opkg
-#        - repository: https://github.com/leograba/lava-tests.git
-#          from: git
-#          path: basic/basic-opkg-python.yaml
-#          name: opkg-install-python
+
