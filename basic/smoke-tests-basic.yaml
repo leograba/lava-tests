@@ -26,8 +26,4 @@ run:
         - lava-test-case test-mv --shell mv /home/root/testdir/testfile /home/root/testdir/testfile2
         - lava-test-case test-rm --shell rm -rf /home/root/testdir
         - lava-test-case test-uname --shell uname -a
-        - lava-test-case test-ifconfig --shell ifconfig -a
-        - lava-test-case test-route --shell route
-        - lava-test-case test-ping --shell ping -c4 8.8.8.8
-        - lava-test-case test-wget --shell wget http://www.google.com/index.html
         - lava-test-case test-lsusb --shell lsusb
