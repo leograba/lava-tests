@@ -1,0 +1,29 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: test-basic-commands
+    description: "Test basic commands"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx7
+
+run:
+    steps:
+        - lava-test-case test-ls --shell ls
+        - lava-test-case test-pwd --shell pwd
+        - lava-test-case test-cd --shell cd
+        - lava-test-case test-touch --shell touch /home/root/testfile
+        - lava-test-case test-mkdir --shell mkdir /home/root/testdir
+        - lava-test-case test-cp --shell cp /home/root/testfile /home/root/testdir/testfile
+        - lava-test-case test-mv --shell mv /home/root/testdir/testfile /home/root/testdir/testfile2
+        - lava-test-case test-rm --shell rm -rf /home/root/testdir
+        - lava-test-case test-uname --shell uname -a
+        - lava-test-case test-lsusb --shell lsusb

@@ -1,0 +1,70 @@
+    device_type: apalis-imx6
+    job_name: CI Automated Test - Toradex ARM OpenEmbedded pipeline, OE image NFS deploy test
+
+    timeouts:
+      job:
+        minutes: 15
+      action:
+        minutes: 5
+      connection:
+        minutes: 2
+    priority: medium
+    visibility: public
+
+    metadata:
+      docs-filename: ci-auto-test_tdx-oe-nfs.yaml
+
+    # ACTION_BLOCK
+    actions:
+    - deploy:
+        timeout:
+          minutes: 5
+        to: tftp
+        kernel:
+          url: https://s3-us-west-2.amazonaws.com/tx-public-builds/images-yocto/apalis-imx6/morty/core-image-minimal/20170911184208/images/apalis-imx6/uImage
+          type: uImage
+        nfsrootfs:
+          url: https://s3-us-west-2.amazonaws.com/tx-public-builds/images-yocto/apalis-imx6/morty/core-image-minimal/20170911184208/images/apalis-imx6/core-image-minimal-apalis-imx6.tar.xz
+          compression: xz
+        modules:
+          url: https://s3-us-west-2.amazonaws.com/tx-public-builds/images-yocto/apalis-imx6/morty/core-image-minimal/20170911184208/images/apalis-imx6/modules-apalis-imx6.tgz
+          compression: gz
+        os: oe
+        dtb:
+          url: https://s3-us-west-2.amazonaws.com/tx-public-builds/images-yocto/apalis-imx6/morty/core-image-minimal/20170911184208/images/apalis-imx6/uImage-imx6q-apalis-eval.dtb
+
+    - boot:
+        timeout:
+          minutes: 3
+        method: u-boot
+        connection: serial
+        prompts: ["root@apalis-imx6:"]
+        commands: nfs
+        auto_login:
+          login_prompt: "apalis-imx6 login:"
+          username: root
+
+    - test:
+        timeout:
+          minutes: 5
+        definitions:
+        - repository: https://github.com/leograba/lava-tests.git
+          from: git
+          path: basic/basic-ls.yaml
+          name: test-ls-command
+        - repository: https://github.com/leograba/lava-tests.git
+          from: git
+          path: basic/basic-cmdline.yaml
+          name: test-basic-commands
+        - repository: https://github.com/leograba/lava-tests.git
+          from: git
+          path: basic/basic-shell-script.yaml
+          name: basic-shell-script
+#        - repository: https://github.com/leograba/lava-tests.git
+#          from: git
+#          path: basic/basic-opkg.yaml
+#          name: test-opkg
+#        - repository: https://github.com/leograba/lava-tests.git
+#          from: git
+#          path: basic/basic-opkg-python.yaml
+#          name: opkg-install-python

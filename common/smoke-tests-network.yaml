@@ -1,0 +1,23 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: test-basic-network
+    description: "Test basic network commands and connectivity"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx7
+
+run:
+    steps:
+        - lava-test-case test-ifconfig --shell ifconfig -a
+        - lava-test-case test-route --shell route
+        - lava-test-case test-ping --shell ping -c4 8.8.8.8
+        - lava-test-case test-wget --shell wget http://www.google.com/index.html

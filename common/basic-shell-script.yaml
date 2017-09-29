@@ -1,0 +1,27 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: basic-shell-script
+    description: "Test basic shell script"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx7
+
+#install:
+#    git-repos:
+#        - https://github.com/leograba/lava-tests.git
+
+
+run:
+    steps:
+        - lava-test-case test-script-exists --shell ls -l basic/hello.sh
+        - ./basic/hello.sh
+
