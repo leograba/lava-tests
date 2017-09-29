@@ -22,6 +22,6 @@ metadata:
 
 run:
     steps:
-        - ls -l basic/hello.sh
+        - lava-test-case test-script-exists --shell ls -l basic/hello.sh
         - ./basic/hello.sh
 
