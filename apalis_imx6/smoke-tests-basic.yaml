@@ -50,7 +50,7 @@
         definitions:
         - repository: https://github.com/leograba/lava-tests.git
           from: git
-          path: basic/smoke-tests-basic.yaml
+          path: common/smoke-tests-basic.yaml
           name: test-basic-commands
 
 

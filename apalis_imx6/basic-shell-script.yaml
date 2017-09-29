@@ -54,6 +54,6 @@
 #          name: test-basic-commands
         - repository: https://github.com/leograba/lava-tests.git
           from: git
-          path: basic/basic-shell-script.yaml
+          path: common/basic-shell-script.yaml
           name: basic-shell-script
 

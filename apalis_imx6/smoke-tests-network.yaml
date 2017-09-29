@@ -50,5 +50,5 @@
         definitions:
         - repository: https://github.com/leograba/lava-tests.git
           from: git
-          path: basic/smoke-tests-network.yaml
+          path: common/smoke-tests-network.yaml
           name: test-basic-network
