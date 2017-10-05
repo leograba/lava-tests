@@ -1,0 +1,23 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: mmc-read-ahead
+    description: "Verify the MMC read-ahead size for the Apalis iMX6"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+
+#install:
+#    git-repos:
+#        - https://github.com/leograba/lava-tests.git
+
+
+run:
+    steps:
+        - 'if [ `cat /sys/block/mmcblk0/queue/read_ahead_kb` -ne 1024 ]; then'
+        - 'lava-test-case mmc-read-ahead-size --result fail'
+        - 'else lava-test-case mmc-read-ahead-size --result pass ; fi'
