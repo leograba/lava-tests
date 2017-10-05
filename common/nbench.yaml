@@ -1,0 +1,34 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: nbench-benchmark
+    description: "Run the nbench benchmark and parse integer and floating point indexes"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx7
+
+#install:
+#    git-repos:
+#        - https://github.com/leograba/lava-tests.git
+
+
+run:
+    steps:
+#       - 'curl https://raw.githubusercontent.com/RTEMS/examples-v2/master/benchmarks/nbench/nbench-byte-2.2.3/NNET.DAT > NNET.DAT'
+        - 'OPT=""' #Add nbench command-line options here if needed
+        - 'nbench $OPT | tee nbench.log'
+        - 'log_file_size=`ls -l nbench.log | awk '{printf $5}'`'
+        - 'if [ ${log_file_size} -gt 0 ]; then'
+        - 'lava-test-case run-nbench --result pass'
+        - 'lava-test-case-attach run-nbench nbench.log'
+        - './basic/hello.sh nbench.log'
+        - 'else lava-test-case run-nbench --result fail ; fi'
+
