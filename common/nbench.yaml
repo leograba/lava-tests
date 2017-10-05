@@ -25,7 +25,7 @@ run:
 #       - 'curl https://raw.githubusercontent.com/RTEMS/examples-v2/master/benchmarks/nbench/nbench-byte-2.2.3/NNET.DAT > NNET.DAT'
         - 'OPT=""' #Add nbench command-line options here if needed
         - 'nbench $OPT | tee nbench.log'
-        - 'log_file_size=`ls -l nbench.log | awk '{printf $5}'`'
+        - 'log_file_size=`ls -l nbench.log | awk ''{printf $5}''`'
         - 'if [ ${log_file_size} -gt 0 ]; then'
         - 'lava-test-case run-nbench --result pass'
         - 'lava-test-case-attach run-nbench nbench.log'
