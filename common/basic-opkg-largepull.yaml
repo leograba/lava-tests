@@ -1,0 +1,25 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: opkg-install-python
+    description: "Check opkg Angstrom feeds"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx7
+
+run:
+    steps:
+        - lava-test-case internet-available-test ping -c 4 8.8.8.8
+        - lava-test-case internet-dns-working ping -c 4 google.com
+        - lava-test-case update-feeds opkg update
+        - lava-test-case install-largepull opkg install packagegroup-sdk-target
+        - lava-test-case test-gcc gcc --version
+        - lava-test-case test-make make --version
