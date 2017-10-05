@@ -1,5 +1,5 @@
     device_type: apalis-imx6
-    job_name: Basic shell script test execution
+    job_name: Run the nbench benchmark and parse integer and floating point indexes
 
     timeouts:
       job:
