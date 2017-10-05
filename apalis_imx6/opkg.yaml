@@ -56,3 +56,7 @@
           from: git
           path: basic/basic-opkg-python.yaml
           name: opkg-install-python
+        - repository: https://github.com/leograba/lava-tests.git
+          from: git
+          path: basic/basic-opkg-largepull.yaml
+          name: opkg-largepull

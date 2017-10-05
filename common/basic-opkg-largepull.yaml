@@ -1,6 +1,6 @@
 metadata:
     format: Lava-Test Test Definition 1.0
-    name: opkg-install-python
+    name: opkg-largepull
     description: "Check opkg Angstrom feeds"
     maintainer:
         - leogveiga@gmail.com
