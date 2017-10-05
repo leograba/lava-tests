@@ -1,7 +1,7 @@
 metadata:
     format: Lava-Test Test Definition 1.0
     name: opkg-install-python
-    description: "Test ls command"
+    description: "Check opkg Angstrom feeds"
     maintainer:
         - leogveiga@gmail.com
     os:
@@ -17,10 +17,8 @@ metadata:
 
 run:
     steps:
-        - opkg --help
-        - ifconfig
-        - ping -c 4 8.8.8.8
-        - ping -c 4 google.com
-        - opkg update
-        - opkg install python-dev
-        - lava-test-case py-hello-world python ./hello.py
+        - lava-test-case internet-available-test ping -c 4 8.8.8.8
+        - lava-test-case internet-dns-working ping -c 4 google.com
+        - lava-test-case update-feeds opkg update
+        - lava-test-case install-python opkg install python-dev
+        - lava-test-case test-python python ./hello.py

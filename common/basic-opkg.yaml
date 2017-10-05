@@ -1,7 +1,7 @@
 metadata:
     format: Lava-Test Test Definition 1.0
     name: test-opkg
-    description: "Test opkg package manager"
+    description: "Test if opkg package manager is installed"
     maintainer:
         - leogveiga@gmail.com
     os:
@@ -17,6 +17,5 @@ metadata:
 
 run:
     steps:
-        - opkg --help
-        - opkg list-installed
-      
+        - lava-test-case opkg-sanity-test opkg --help
+        - lava-test-case opkg-list-installed opkg list-installed

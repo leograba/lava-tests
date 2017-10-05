@@ -50,21 +50,9 @@
         definitions:
         - repository: https://github.com/leograba/lava-tests.git
           from: git
-          path: basic/basic-ls.yaml
-          name: test-ls-command
+          path: basic/basic-opkg.yaml
+          name: test-opkg
         - repository: https://github.com/leograba/lava-tests.git
           from: git
-          path: basic/basic-cmdline.yaml
-          name: test-basic-commands
-        - repository: https://github.com/leograba/lava-tests.git
-          from: git
-          path: basic/basic-shell-script.yaml
-          name: basic-shell-script
-#        - repository: https://github.com/leograba/lava-tests.git
-#          from: git
-#          path: basic/basic-opkg.yaml
-#          name: test-opkg
-#        - repository: https://github.com/leograba/lava-tests.git
-#          from: git
-#          path: basic/basic-opkg-python.yaml
-#          name: opkg-install-python
+          path: basic/basic-opkg-python.yaml
+          name: opkg-install-python
