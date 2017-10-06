@@ -18,24 +18,32 @@ esac
 
 # MMC
 
-if [ -d /sys/block/${MMC_MOUNT} ] ; then
-	lava-test-case mmc-exist --result pass
-else lava-test-case mmc-exist --result fail
-fi
+if [ $MMC -eq 0 ] ; then
+	:
+else
+	if [ -d /sys/block/${MMC_MOUNT} ] ; then
+		lava-test-case mmc-exist --result pass
+	else lava-test-case mmc-exist --result fail
+	fi
 
-if [ `cat /sys/block/${MMC_MOUNT}/queue/read_ahead_kb` -ne ${MMC} ] ; then
-	lava-test-case mmc-read-ahead-size --result fail
-else lava-test-case mmc-read-ahead-size --result pass --measurement ${MMC}
+	if [ `cat /sys/block/${MMC_MOUNT}/queue/read_ahead_kb` -ne ${MMC} ] ; then
+		lava-test-case mmc-read-ahead-size --result fail
+	else lava-test-case mmc-read-ahead-size --result pass --measurement ${MMC}
+	fi
 fi
 
 # SD card
 
-if [ -d /sys/block/${SD_MOUNT} ] ; then
-	lava-test-case sd-card-exist --result pass
-else lava-test-case sd-card-exist --result fail
-fi
+if [ $SD -eq 0 ] ; then
+	:
+else
+	if [ -d /sys/block/${SD_MOUNT} ] ; then
+		lava-test-case sd-card-exist --result pass
+	else lava-test-case sd-card-exist --result fail
+	fi
 
-if [ `cat /sys/block/${SD_MOUNT}/queue/read_ahead_kb` -ne ${SD} ] ; then
-	lava-test-case sd-card-read-ahead-size --result fail
-else lava-test-case sd-card-read-ahead-size --result pass --measurement ${SD}
+	if [ `cat /sys/block/${SD_MOUNT}/queue/read_ahead_kb` -ne ${SD} ] ; then
+		lava-test-case sd-card-read-ahead-size --result fail
+	else lava-test-case sd-card-read-ahead-size --result pass --measurement ${SD}
+	fi
 fi
