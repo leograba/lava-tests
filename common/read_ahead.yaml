@@ -23,7 +23,7 @@ metadata:
 run:
     steps:
         - 'ARGS=`uname -a | cut -d '' '' -f2`'
-        - './common/read_ahead.sh $ARGS'
+        - './common/sh_scripts/read_ahead.sh $ARGS'
         - 'if [ $? -eq 0 ] ; then'
         - 'lava-test-case run-read-ahead --result pass'
         - 'else lava-test-case run-read-ahead --result fail ; fi'

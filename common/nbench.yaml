@@ -29,6 +29,6 @@ run:
         - 'if [ ${log_file_size} -gt 0 ]; then'
         - 'lava-test-case run-nbench --result pass'
         - 'lava-test-case-attach run-nbench nbench.log'
-        - './basic/hello.sh nbench.log'
+        - './common/sh_scripts/nbench.sh nbench.log'
         - 'else lava-test-case run-nbench --result fail ; fi'
 
