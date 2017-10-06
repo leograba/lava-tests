@@ -50,6 +50,6 @@
         definitions:
         - repository: https://github.com/leograba/lava-tests.git
           from: git
-          path: common/mmc_read_ahead_apalis_imx6.yaml
-          name: mmc-read-ahead
+          path: common/read_ahead_apalis_imx6.yaml
+          name: read-ahead-size-check
 
