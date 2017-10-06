@@ -3,7 +3,7 @@ LAVA tests
 
 ## How to use
 
-YAML files in the *master* directory are the ones that should be submitted to the lava-server
-
-The other directories hold the custom written tests
+Thehe *<module_name>* directories have the test job definitions that should be submitted to the LAVA server.
+The *common* directory holds the lava test shell definitions used by the test job definitions.
+The *common/sh_scripts* directory holds the shell scripts used by the test shell definitions.
 
