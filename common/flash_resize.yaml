@@ -1,0 +1,36 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: resize-fs
+    description: "Verify if the root partition has been fully resized"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx6ull
+        - colibri-imx7
+        - colibri-imx7-1gb
+        - colibri-t20
+        - colibri-t30
+        - colibri-vf
+
+#install:
+#    git-repos:
+#        - https://github.com/leograba/lava-tests.git
+
+
+run:
+    steps:
+        - 'ARGS=`uname -a | cut -d '' '' -f2`'
+        - './common/sh_scripts/read_ahead.sh $ARGS'
+        - 'if [ $? -eq 0 ] ; then'
+        - 'lava-test-case check-flash-resize --result pass'
+        - 'df > root_part_size.log'
+        - 'lava-test-case-attach check-flash-resize root_part_size.log'
+        - 'else lava-test-case check-flash-resize --result fail ; fi'
