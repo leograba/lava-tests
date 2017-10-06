@@ -47,7 +47,7 @@
 
     - test:
         timeout:
-          minutes: 5
+          minutes: 8
         definitions:
         - repository: https://github.com/leograba/lava-tests.git
           from: git
