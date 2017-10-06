@@ -10,6 +10,15 @@ metadata:
         - functional
     devices:
         - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx6ull
+        - colibri-imx7
+        - colibri-imx7-1gb
+        - colibri-t20
+        - colibri-t30
+        - colibri-vf
 
 run:
     steps:
