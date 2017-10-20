@@ -1,7 +1,7 @@
 metadata:
     format: Lava-Test Test Definition 1.0
     name: opkg-install-python
-    description: "Check opkg Angstrom feeds"
+    description: "Check opkg Angstrom feeds by installing Python"
     maintainer:
         - leogveiga@gmail.com
     os:

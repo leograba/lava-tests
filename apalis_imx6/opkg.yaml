@@ -1,5 +1,5 @@
     device_type: apalis-imx6
-    job_name: CI Automated Test - Toradex ARM OpenEmbedded pipeline, OE image NFS deploy test
+    job_name: Run opkg tests
 
     timeouts:
       job:

@@ -1,7 +1,7 @@
 metadata:
     format: Lava-Test Test Definition 1.0
     name: opkg-largepull
-    description: "Check opkg Angstrom feeds"
+    description: "Install a large opkg package"
     maintainer:
         - leogveiga@gmail.com
     os:
