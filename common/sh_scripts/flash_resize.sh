@@ -35,10 +35,17 @@ case $1 in
 	*) exit 1 ;;
 esac
 
+df #for debugging purposes
+
 FLASH_SIZE=$(df | grep "/dev/root" | awk '{ print $2 "\t"}')
-if [ "$FLASH_SIZE" -lt "$FLASH_SIZE_MIN" ] || [ "$FLASH_SIZE" -gt "$FLASH_SIZE_MAX" ]; then
-    lava-test-case flash-partition-size --result fail
+if [ -z "$FLASH_SIZE"]; then
+	lava-test-case flash-partition-exist --result fail
 else
-    lava-test-case flash-partition-size --result pass --measurement ${FLASH_SIZE}
+	lava-test-case flash-partition-exist --result pass
+	if [ "$FLASH_SIZE" -lt "$FLASH_SIZE_MIN" ] || [ "$FLASH_SIZE" -gt "$FLASH_SIZE_MAX" ]; then
+	    lava-test-case flash-partition-size --result fail
+	else
+	    lava-test-case flash-partition-size --result pass --measurement ${FLASH_SIZE}
+	fi
 fi
 
