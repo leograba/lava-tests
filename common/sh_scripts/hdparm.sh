@@ -3,52 +3,69 @@
 set -x
 
 case $1 in
+	# Data available is based on tests conducted on BSP 2.7b1 for 
+	# the read-ahead tuning. SD card wasn't tested for modules without eMMC
+	# 1 - exist; 0 - nonexistent
 	apalis-imx6)
-		MMC=1024 ; SD1=512 ; SD2=512
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=mmcblk2 ;;
+		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=78 ; MMC_MAX=82
+		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=23 ; SD1_MAX=18
+		SD2=1 ; SD2_MOUNT=mmcblk2 ; SD2_MIN=23 ; SD2_MAX=18;;
 	apalis-t30)
-		MMC=4096 ; SD1=1024 ; SD2=512
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=mmcblk2 ;;
+		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=52 ; MMC_MAX=61
+		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=16 ; SD1_MAX=20
+		SD2=1 ; SD2_MOUNT=mmcblk2 ; SD2_MIN=16 ; SD2_MAX=20;;
 	apalis-tk1)
-		MMC=4096 ; SD1=1024 ; SD2=512
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=mmcblk2 ;;
+		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=76 ; MMC_MAX=80
+		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=19 ; SD1_MAX=23
+		SD2=1 ; SD2_MOUNT=mmcblk2 ; SD2_MIN=19 ; SD2_MAX=23;;
 	colibri-imx6)
-		MMC=1024 ; SD1=512 ; SD2=0
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=  ;;
+		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=78 ; MMC_MAX=82
+		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=19 ; SD1_MAX=23
+		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
 	colibri-imx6ull)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
+		MMC=0 ; MMC_MOUNT= ; MMC_MIN= ; MMC_MAX=
+		SD1=1 ; SD1_MOUNT=mmcblk0 ; SD1_MIN=16 ; SD1_MAX=23 # must check
+		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
 	colibri-imx7)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
+		MMC=0 ; MMC_MOUNT= ; MMC_MIN= ; MMC_MAX=
+		SD1=1 ; SD1_MOUNT=mmcblk0 ; SD1_MIN=16 ; SD1_MAX=23 # must check
+		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
 	colibri-imx7-1gb)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
+		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN= ; MMC_MAX= #TBD
+		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=16 ; SD1_MAX=23 # must check
+		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
 	colibri-t30)
-		MMC=2048 ; SD1=1024 ; SD2=0
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=  ;;
+		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=58 ; MMC_MAX=62
+		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=16 ; SD1_MAX=20
+		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
 	colibri-t20)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
+		MMC=0 ; MMC_MOUNT= ; MMC_MIN= ; MMC_MAX=
+		SD1=1 ; SD1_MOUNT=mmcblk0 ; SD1_MIN=16 ; SD1_MAX=23 # must check
+		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
 	colibri-vf)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
+		MMC=0 ; MMC_MOUNT= ; MMC_MIN= ; MMC_MAX=
+		SD1=1 ; SD1_MOUNT=mmcblk0 ; SD1_MIN=16 ; SD1_MAX=23 # must check
+		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
 	*) exit 1 ;;
 esac
+
+# Should there be separate tests for lower and upper limits?
 
 # MMC
 
 if [ $MMC -eq 0 ] ; then
 	:
 else
-	if [ -d /sys/block/${MMC_MOUNT} ] ; then
+	if [ -b /dev/${MMC_MOUNT} ]; then
 		lava-test-case mmc-exist --result pass
 
-		if [ `cat /sys/block/${MMC_MOUNT}/queue/read_ahead_kb` -ne ${MMC} ] ; then
-			lava-test-case mmc-read-ahead-size --result fail
-		else lava-test-case mmc-read-ahead-size --result pass --measurement ${MMC}
-		fi
-
+		MMC_PERF=$(hdparm -t /dev/mmcblk0 | awk '{ print $11 "\t"}' | cut -d '.' -f 1)
+		if [ "$MMC_PERF" -lt "$MMC_MIN" ] || [ "$MMC_PERF" -gt "$MMC_MAX" ]; then
+	    lava-test-case hdparm-result-mmc --result fail
+	else
+	    lava-test-case hdparm-result-mmc --result pass --measurement ${MMC_PERF}
+	fi
+		
 	else lava-test-case mmc-exist --result fail
 	fi
 fi
@@ -58,15 +75,17 @@ fi
 if [ $SD1 -eq 0 ] ; then
 	:
 else
-	if [ -d /sys/block/${SD1_MOUNT} ] ; then
-		lava-test-case sd-card1-exist --result pass
+	if [ -b /dev/${SD1_MOUNT} ]; then
+		lava-test-case sd1-exist --result pass
 
-		if [ `cat /sys/block/${SD1_MOUNT}/queue/read_ahead_kb` -ne ${SD1} ] ; then
-			lava-test-case sd-card1-read-ahead-size --result fail
-		else lava-test-case sd-card1-read-ahead-size --result pass --measurement ${SD1}
-		fi
-
-	else lava-test-case sd-card1-exist --result fail
+		SD1_PERF=$(hdparm -t /dev/${SD1_MOUNT} | awk '{ print $11 "\t"}')
+		if [ "$SD1_PERF" -lt "$SD1_MIN" ] || [ "$SD1_PERF" -gt "$SD1_MAX" ]; then
+	    lava-test-case hdparm-result-sd1 --result fail
+	else
+	    lava-test-case hdparm-result-sd1 --result pass --measurement ${SD1_PERF}
+	fi
+		
+	else lava-test-case sd1-exist --result fail
 	fi
 fi
 
@@ -75,14 +94,16 @@ fi
 if [ $SD2 -eq 0 ] ; then
 	:
 else
-	if [ -d /sys/block/${SD2_MOUNT} ] ; then
-		lava-test-case sd-card2-exist --result pass
+	if [ -b /dev/${SD2_MOUNT} ]; then
+		lava-test-case sd2-exist --result pass
 
-		if [ `cat /sys/block/${SD2_MOUNT}/queue/read_ahead_kb` -ne ${SD2} ] ; then
-			lava-test-case sd-card2-read-ahead-size --result fail
-		else lava-test-case sd-card2-read-ahead-size --result pass --measurement ${SD2}
-		fi
-
-	else lava-test-case sd-card2-exist --result fail
+		SD2_PERF=$(hdparm -t /dev/${SD2_MOUNT} | awk '{ print $11 "\t"}')
+		if [ "$SD2_PERF" -lt "$SD2_MIN" ] || [ "$SD2_PERF" -gt "$SD2_MAX" ]; then
+	    lava-test-case hdparm-result-sd2 --result fail
+	else
+	    lava-test-case hdparm-result-sd2 --result pass --measurement ${SD2_PERF}
+	fi
+		
+	else lava-test-case sd2-exist --result fail
 	fi
 fi
