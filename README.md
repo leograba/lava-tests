@@ -17,3 +17,5 @@ colibri-imx7-1gb. This will fail, therefore the technique to find the module con
 be updated.
 - Discuss whether benchmarks should have separate tests for min and max values, when testing a range
 - Currently the nbench results are not parsed. This should be improved
+- Add a sanity check to the beginning of tests when a benchmark or command
+should be available by default, e.g. lava-test-case hdparm-available --shell hdparm --help
