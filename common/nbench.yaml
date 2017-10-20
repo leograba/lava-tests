@@ -22,6 +22,7 @@ metadata:
 
 run:
     steps:
+# Currently the nbench results are not parsed. This should be improved
 #       - 'curl https://raw.githubusercontent.com/RTEMS/examples-v2/master/benchmarks/nbench/nbench-byte-2.2.3/NNET.DAT > NNET.DAT'
         - 'OPT=""' #Add nbench command-line options here if needed
         - 'nbench $OPT | tee nbench.log'
