@@ -29,7 +29,7 @@ run:
     steps:
         - 'sleep 180' # If this is the first boot, have to wait for resize to complete
         - 'ARGS=`uname -a | cut -d '' '' -f2`'
-        - './common/sh_scripts/read_ahead.sh $ARGS'
+        - './common/sh_scripts/flash_resize.sh $ARGS'
         - 'if [ $? -eq 0 ] ; then'
         - 'lava-test-case check-flash-resize --result pass'
         - 'df > root_part_size.log'
