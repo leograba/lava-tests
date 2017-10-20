@@ -15,3 +15,4 @@ LAVA tests
 parameters for modules that have the same name but different configuration. E.g. colibri-imx7 and
 colibri-imx7-1gb. This will fail, therefore the technique to find the module configuration has to
 be updated.
+-  Discuss whether benchmarks should have separate tests for min and max values, when testing a range
