@@ -17,8 +17,8 @@ metadata:
 
 run:
     steps:
-        - lava-test-case internet-available-test ping -c 4 8.8.8.8
-        - lava-test-case internet-dns-working ping -c 4 google.com
-        - lava-test-case update-feeds opkg update
-        - lava-test-case install-python opkg install python
-        - lava-test-case test-python python --version
+        - lava-test-case internet-available-test --shell ping -c 4 8.8.8.8
+        - lava-test-case internet-dns-working --shell ping -c 4 google.com
+        - lava-test-case update-feeds --shell opkg update
+        - lava-test-case install-python --shell opkg install python
+        - lava-test-case test-python --shell python --version

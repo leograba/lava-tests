@@ -17,5 +17,5 @@ metadata:
 
 run:
     steps:
-        - lava-test-case opkg-sanity-test opkg --help
-        - lava-test-case opkg-list-installed opkg list-installed
+        - lava-test-case opkg-sanity-test --shell opkg --help
+        - lava-test-case opkg-list-installed --shell opkg list-installed
