@@ -9,3 +9,9 @@ LAVA tests
 - *common*: holds the lava test shell definitions used by the test job definitions.
 - *common/sh_scripts*: holds the shell scripts used by the test shell definitions.
 
+### ToDo
+
+- There are tests that work based on the module model, by using 'uname'. Later, scripts have additional
+parameters for modules that have the same name but different configuration. E.g. colibri-imx7 and
+colibri-imx7-1gb. This will fail, therefore the technique to find the module configuration has to
+be updated.
