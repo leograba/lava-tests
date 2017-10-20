@@ -1,0 +1,55 @@
+    device_type: apalis-imx6
+    job_name: Use hdparm to verify eMMC and SD card disk read speed
+
+    timeouts:
+      job:
+        minutes: 15
+      action:
+        minutes: 5
+      connection:
+        minutes: 2
+    priority: medium
+    visibility: public
+
+    metadata:
+      docs-filename: basic-shell.yaml
+
+    # ACTION_BLOCK
+    actions:
+    - deploy:
+        timeout:
+          minutes: 5
+        to: tftp
+        kernel:
+          url: https://s3-us-west-2.amazonaws.com/tx-public-builds/images-yocto/apalis-imx6/morty/core-image-minimal/20170911184208/images/apalis-imx6/uImage
+          type: uImage
+        nfsrootfs:
+          url: https://s3-us-west-2.amazonaws.com/tx-public-builds/images-yocto/apalis-imx6/morty/core-image-minimal/20170911184208/images/apalis-imx6/core-image-minimal-apalis-imx6.tar.xz
+          compression: xz
+        modules:
+          url: https://s3-us-west-2.amazonaws.com/tx-public-builds/images-yocto/apalis-imx6/morty/core-image-minimal/20170911184208/images/apalis-imx6/modules-apalis-imx6.tgz
+          compression: gz
+        os: oe
+        dtb:
+          url: https://s3-us-west-2.amazonaws.com/tx-public-builds/images-yocto/apalis-imx6/morty/core-image-minimal/20170911184208/images/apalis-imx6/uImage-imx6q-apalis-eval.dtb
+
+    - boot:
+        timeout:
+          minutes: 3
+        method: u-boot
+        connection: serial
+        prompts: ["root@apalis-imx6:"]
+        commands: nfs
+        auto_login:
+          login_prompt: "apalis-imx6 login:"
+          username: root
+
+    - test:
+        timeout:
+          minutes: 5
+        definitions:
+        - repository: https://github.com/leograba/lava-tests.git
+          from: git
+          path: common/hdparm.yaml
+          name: hdparm-read-speed
+

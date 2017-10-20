@@ -1,0 +1,29 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: hdparm-read-speed
+    description: "Use hdparm to verify eMMC and SD card disk read speed"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx6ull
+        - colibri-imx7
+        - colibri-imx7-1gb
+        - colibri-t20
+        - colibri-t30
+        - colibri-vf
+
+run:
+    steps:
+        - 'ARGS=`uname -a | cut -d '' '' -f2`'
+        - './common/sh_scripts/read_ahead.sh $ARGS'
+        - 'if [ $? -eq 0 ] ; then'
+        - 'lava-test-case run-read-ahead --result pass'
+        - 'else lava-test-case run-read-ahead --result fail ; fi'
