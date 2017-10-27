@@ -28,10 +28,10 @@ but should have more features.
 - [Opkg](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/opkg.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
 - [Read-ahead](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/read_ahead.yaml): image tested had default read-ahead size. Shell scripts work on Apalis iMX6. 
 - [Hdparm](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/hdparm.yaml): image tested does not have hdpart. Script works on Apalis iMX6.
+- [Nbench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/nbench.yaml): image tested does not have nbench. Shell script work on Apalis iMX6.
 
 #### Unfinished and to be improved
 
-- [Nbench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/nbench.yaml): image tested does not have nbench. Script works but results are not currenty parsed, only stored.
 - [Flash resize](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/flash_resize.yaml): not working. Must wait until boot from flash is available.
 
 ### ToDo
@@ -45,3 +45,4 @@ be updated.
 - Add a sanity check to the beginning of tests when a benchmark or command
 should be available by default, e.g. lava-test-case hdparm-available --shell hdparm --help
 - Consider having a server with benchmarks and other binaries compiled for tests using the latest image/toolchain
+- Go throught the upper/lower limits of the benchmarks and verify if they are feasible

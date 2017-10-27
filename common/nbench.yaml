@@ -23,14 +23,16 @@ metadata:
 run:
     steps:
 # Currently the nbench results are not parsed. This should be improved
-#       - 'curl https://raw.githubusercontent.com/RTEMS/examples-v2/master/benchmarks/nbench/nbench-byte-2.2.3/NNET.DAT > NNET.DAT'
         - 'lava-test-case nbench-available --shell nbench --help'
+        - 'curl https://raw.githubusercontent.com/RTEMS/examples-v2/master/benchmarks/nbench/nbench-byte-2.2.3/NNET.DAT > NNET.DAT'
         - 'OPT=""' #Add nbench command-line options here if needed
         - 'nbench $OPT | tee nbench.log'
         - 'log_file_size=`ls -l nbench.log | awk ''{printf $5}''`'
         - 'if [ ${log_file_size} -gt 0 ]; then'
         - 'lava-test-case run-nbench --result pass'
-        - 'lava-test-case-attach run-nbench nbench.log'
+		- 'ARG1=`uname -a | cut -d '' '' -f2`'
+        - 'ARG2=nbench.log'
+        - 'lava-test-case-attach run-nbench $ARG1 $ARG2'
         - './common/sh_scripts/nbench.sh nbench.log'
         - 'else lava-test-case run-nbench --result fail ; fi'
 
