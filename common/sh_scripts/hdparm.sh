@@ -50,6 +50,7 @@ case $1 in
 esac
 
 # Should there be separate tests for lower and upper limits?
+# Value is round for comparison
 
 # MMC
 
@@ -61,10 +62,10 @@ else
 
 		MMC_PERF=$(hdparm -t /dev/mmcblk0 | awk '{ print $11 "\t"}' | cut -d '.' -f 1)
 		if [ "$MMC_PERF" -lt "$MMC_MIN" ] || [ "$MMC_PERF" -gt "$MMC_MAX" ]; then
-	    lava-test-case hdparm-result-mmc --result fail
-	else
-	    lava-test-case hdparm-result-mmc --result pass --measurement ${MMC_PERF}
-	fi
+			lava-test-case hdparm-result-mmc --result fail
+		else
+			lava-test-case hdparm-result-mmc --result pass --measurement ${MMC_PERF}
+		fi
 		
 	else lava-test-case mmc-exist --result fail
 	fi
