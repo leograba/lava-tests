@@ -1,0 +1,30 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: tinymembench
+    description: "Use Tinymembenck to check RAM performance"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx6ull
+        - colibri-imx7
+        - colibri-imx7-1gb
+        - colibri-t20
+        - colibri-t30
+        - colibri-vf
+
+run:
+    steps:
+        - 'lava-test-case tinymembench-available --shell tinymembench | tee tinymembench.log'
+        - './common/sh_scripts/tinymembench.sh tinymembench.log'
+        - 'if [ $? -eq 0 ] ; then'
+        - 'lava-test-case run-tinymembench --result pass'
+        - 'lava-test-case-attach run-tinymembench tinymembench.log'
+        - 'else lava-test-case run-tinymembench --result fail ; fi'
