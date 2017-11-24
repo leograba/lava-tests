@@ -28,5 +28,5 @@ case $MOD_ID in
 			export STD_MEMSET_MIN=1000; export STD_MEMSET_MAX=3000;
 			export LATENCY_MIN=60; export LATENCY_MAX=250;;
 
-	*) exit 1 ;
+	*) false ;
 esac
