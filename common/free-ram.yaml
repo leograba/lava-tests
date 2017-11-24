@@ -1,0 +1,30 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: free-ram
+    description: "Check the amount of free RAM memory"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx6ull
+        - colibri-imx7
+        - colibri-imx7-1gb
+        - colibri-t20
+        - colibri-t30
+        - colibri-vf
+
+run:
+    steps:
+        - 'lava-test-case hdparm-available --shell free --help'
+        - 'ARGS=`uname -a | cut -d '' '' -f2`'
+        - './common/sh_scripts/free-ram.sh $ARGS'
+        - 'if [ $? -eq 0 ] ; then'
+        - 'lava-test-case run-free-ram --result pass'
+        - 'else lava-test-case run-free-ram --result fail ; fi'
