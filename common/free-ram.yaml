@@ -22,7 +22,7 @@ metadata:
 
 run:
     steps:
-        - 'lava-test-case hdparm-available --shell free --help'
+        - 'lava-test-case free-available --shell free --help'
         - 'ARGS=`uname -a | cut -d '' '' -f2`'
         - './common/sh_scripts/free-ram.sh $ARGS'
         - 'if [ $? -eq 0 ] ; then'
