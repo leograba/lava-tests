@@ -27,22 +27,19 @@ but should have more features.
 - [Smoke tests network](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/smoke-tests-network.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
 - [Opkg](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/opkg.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
 - [Read-ahead](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/read_ahead.yaml): image tested had default read-ahead size. Shell scripts work on Apalis iMX6. 
-- [Hdparm](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/hdparm.yaml): image tested does not have hdpart. Script works on Apalis iMX6.
-- [Nbench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/nbench.yaml): image tested does not have nbench. Shell script work on Apalis iMX6.
+- [Nbench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/nbench.yaml): image tested does not have nbench. Shell script work on Apalis iMX6. Benchmark acceptable range has to be reviewed.
+- [Free RAM](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/free-ram.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
 
 #### Unfinished and to be improved
 
-- [Flash resize](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/flash_resize.yaml): not working. Must wait until boot from flash is available.
+- [Flash resize](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/flash_resize.yaml): not working. Must wait until boot from flash is available. Must review for UBI based modules.
+- [Hdparm](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/hdparm.yaml): image tested does not have hdparm. Script works on Apalis iMX6. Benchmark acceptable range has to be reviewed. Must remove UBI based modules.
 
-### ToDo
+### ToDo and tips
 
-- There are tests that work based on the module model, by using 'uname'. Later, scripts have additional
-parameters for modules that have the same name but different configuration. E.g. colibri-imx7 and
-colibri-imx7-1gb. This will fail, therefore the technique to find the module configuration has to
-be updated.
-- Discuss whether benchmarks should have separate tests for min and max values, when testing a range
-- Currently the nbench results are not parsed. This should be improved
+- Update the scripts to use */proc/device-tree/toradex,product-id* to identify the module type.
+- Discuss whether benchmarks should have separate tests for min and max values, when testing a range.
 - Add a sanity check to the beginning of tests when a benchmark or command
-should be available by default, e.g. lava-test-case hdparm-available --shell hdparm --help
-- Consider having a server with benchmarks and other binaries compiled for tests using the latest image/toolchain
-- Go throught the upper/lower limits of the benchmarks and verify if they are feasible
+should be available by default, e.g. *lava-test-case hdparm-available --shell hdparm --help*.
+- Consider having a server with benchmarks and other binaries compiled for tests using the latest image/toolchain.
+- Go throught the upper/lower limits of the benchmarks and verify if they are feasible.
