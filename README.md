@@ -43,3 +43,5 @@ but should have more features.
 should be available by default, e.g. *lava-test-case hdparm-available --shell hdparm --help*.
 - Consider having a server with benchmarks and other binaries compiled for tests using the latest image/toolchain.
 - Go throught the upper/lower limits of the benchmarks and verify if they are feasible.
+- Add logfile to benchmark tests using lava-test-case-attach.
+- Consider migrating the benchmark expected values (min and max) for all tests to a single script that can be sourced.
