@@ -8,6 +8,7 @@ All tests have only been tested on Apalis iMX6 so fat, although they have been w
 ### Directories
 
 - *<module_name>*: have the test job definitions that should be submitted to the LAVA server.
+- *<module_name>/resources*: keeps scripts that export min and max values for benchmarks, to be sourced in the benchmark scripts.
 - *common*: holds the lava test shell definitions used by the test job definitions.
 - *common/sh_scripts*: holds the shell scripts used by the test shell definitions.
 
@@ -29,6 +30,7 @@ but should have more features.
 - [Read-ahead](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/read_ahead.yaml): image tested had default read-ahead size. Shell scripts work on Apalis iMX6. 
 - [Nbench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/nbench.yaml): image tested does not have nbench. Shell script work on Apalis iMX6. Benchmark acceptable range has to be reviewed.
 - [Free RAM](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/free-ram.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
+- [Tinymembench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/tinymembench.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
 
 #### Unfinished and to be improved
 
