@@ -23,7 +23,8 @@ metadata:
 run:
     steps:
         - 'lava-test-case tinymembench-available --shell tinymembench | tee tinymembench.log'
-        - './common/sh_scripts/tinymembench.sh tinymembench.log'
+        - 'ARGS=`uname -a | cut -d '' '' -f2`'
+        - './common/sh_scripts/tinymembench.sh $ARGS tinymembench.log'
         - 'if [ $? -eq 0 ] ; then'
         - 'lava-test-case run-tinymembench --result pass'
         - 'lava-test-case-attach run-tinymembench tinymembench.log'
