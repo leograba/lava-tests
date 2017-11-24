@@ -8,44 +8,54 @@ case $1 in
 	# 1 - exist; 0 - nonexistent
 	apalis-imx6)
 		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=78 ; MMC_MAX=82
-		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=23 ; SD1_MAX=18
-		SD2=1 ; SD2_MOUNT=mmcblk2 ; SD2_MIN=23 ; SD2_MAX=18;;
+		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=18 ; SD1_MAX=23
+		SD2=1 ; SD2_MOUNT=mmcblk2 ; SD2_MIN=18 ; SD2_MAX=23
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	apalis-t30)
 		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=52 ; MMC_MAX=61
 		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=16 ; SD1_MAX=20
 		SD2=1 ; SD2_MOUNT=mmcblk2 ; SD2_MIN=16 ; SD2_MAX=20;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	apalis-tk1)
 		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=76 ; MMC_MAX=80
 		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=19 ; SD1_MAX=23
 		SD2=1 ; SD2_MOUNT=mmcblk2 ; SD2_MIN=19 ; SD2_MAX=23;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	colibri-imx6)
 		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=78 ; MMC_MAX=82
 		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=19 ; SD1_MAX=23
 		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	colibri-imx6ull)
 		MMC=0 ; MMC_MOUNT= ; MMC_MIN= ; MMC_MAX=
 		SD1=1 ; SD1_MOUNT=mmcblk0 ; SD1_MIN=16 ; SD1_MAX=23 # must check
 		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	colibri-imx7)
 		MMC=0 ; MMC_MOUNT= ; MMC_MIN= ; MMC_MAX=
 		SD1=1 ; SD1_MOUNT=mmcblk0 ; SD1_MIN=16 ; SD1_MAX=23 # must check
 		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	colibri-imx7-1gb)
 		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN= ; MMC_MAX= #TBD
 		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=16 ; SD1_MAX=23 # must check
 		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	colibri-t30)
 		MMC=1 ; MMC_MOUNT=mmcblk0 ; MMC_MIN=58 ; MMC_MAX=62
 		SD1=1 ; SD1_MOUNT=mmcblk1 ; SD1_MIN=16 ; SD1_MAX=20
 		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	colibri-t20)
 		MMC=0 ; MMC_MOUNT= ; MMC_MIN= ; MMC_MAX=
 		SD1=1 ; SD1_MOUNT=mmcblk0 ; SD1_MIN=16 ; SD1_MAX=23 # must check
 		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	colibri-vf)
 		MMC=0 ; MMC_MOUNT= ; MMC_MIN= ; MMC_MAX=
 		SD1=1 ; SD1_MOUNT=mmcblk0 ; SD1_MIN=16 ; SD1_MAX=23 # must check
 		SD2=0 ; SD2_MOUNT= ; SD2_MIN= ; SD2_MAX=;;
+		USB=1 ; USB_MOUNT=sda1 ; USB_MIN=18 ; USB_MAX=23;;
 	*) exit 1 ;;
 esac
 
@@ -106,5 +116,24 @@ else
 	fi
 		
 	else lava-test-case sd2-exist --result fail
+	fi
+fi
+
+# USB mass storage
+
+if [ $USB -eq 0 ] ; then
+	:
+else
+	if [ -b /dev/${USB_MOUNT} ]; then
+		lava-test-case usb-stick-exist --result pass
+
+		USB_PERF=$(hdparm -t /dev/${USB_MOUNT} | awk '{ print $11 "\t"}')
+		if [ "$USB_PERF" -lt "$USB_MIN" ] || [ "$USB_PERF" -gt "$USB_MAX" ]; then
+	    lava-test-case hdparm-result-usb-stick --result fail
+	else
+	    lava-test-case hdparm-result-usb-stick --result pass --measurement ${USB_PERF}
+	fi
+		
+	else lava-test-case usb-stick-exist --result fail
 	fi
 fi
