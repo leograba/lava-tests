@@ -3,7 +3,7 @@ LAVA tests
 
 ## How to use
 
-All tests have only been tested on Apalis iMX6 so fat, although they have been written thinking about other modules.
+All tests have only been tested on few modules so far, although they have been written thinking about module compatibility.
 
 ### Directories
 
