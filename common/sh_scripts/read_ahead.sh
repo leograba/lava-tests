@@ -2,39 +2,9 @@
 
 set -x
 
-case $1 in
-	apalis-imx6)
-		MMC=1024 ; SD1=512 ; SD2=512
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=mmcblk2 ;;
-	apalis-t30)
-		MMC=4096 ; SD1=1024 ; SD2=512
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=mmcblk2 ;;
-	apalis-tk1)
-		MMC=4096 ; SD1=1024 ; SD2=512
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=mmcblk2 ;;
-	colibri-imx6)
-		MMC=1024 ; SD1=512 ; SD2=0
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=  ;;
-	colibri-imx6ull)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
-	colibri-imx7)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
-	colibri-imx7-1gb)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
-	colibri-t30)
-		MMC=2048 ; SD1=1024 ; SD2=0
-		MMC_MOUNT=mmcblk0 ; SD1_MOUNT=mmcblk1 ; SD2_MOUNT=  ;;
-	colibri-t20)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
-	colibri-vf)
-		MMC=0 ; SD1=0 ; SD2=0
-		MMC_MOUNT= ; SD1_MOUNT= ; SD2_MOUNT= ;;
-	*) exit 1 ;;
-esac
+if [ -z $1 ]; then echo "no module name"; exit 1; fi
+source $1/resources/read-ahead-threshold-values.sh
+if [ $? -ne 0 ]; then echo "wrong module ID or name"; exit 1; fi
 
 # MMC
 
