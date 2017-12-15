@@ -111,32 +111,76 @@ for MODULE in $(echo $MODULES_LIST | tr ";" "\n"); do
 			"set -x\n\n"\
 			"MOD_ID=\$(cat /proc/device-tree/toradex,product-id)\n"\
 			"case \$MOD_ID in\n\n\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+	read -e -p "Use same value for all $MODULE SKUs(y/N)?" -i "N" PROCEED
 
-	#echo "$MODULE is nice"
-	for PRODUCT in $(echo $PRODUCT_IDS | tr ";" "\n"); do
-		if [[ $PRODUCT == "$MODULE"* ]]; then
-			PROD_ID=$(echo $PRODUCT | cut -d "." -f2)
-			PROD_DESC=$(echo $PRODUCT | cut -d "." -f3)
-			echo -e "    #$PROD_DESC\n"\
-					"    $PROD_ID)" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
-
-			if [ -z $TEST_PARM ]; then
-				echo -e "\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
-			else
-				CPARM=0
+	case "$PROCEED" in
+		#same value for all SKUs
+		y|Y )	CPARM=0
+				#read values for all SKUs
 				for PARM in $(echo $TEST_PARM | tr ";" "\n"); do
-					let "CPARM++"
 					read -p "Enter value for $PROD_DESC $PARM: " PARM_VAL
-					if [ "$CPARM" -lt "$NPARMS" ]; then
-						echo -e "        export $PARM=$PARM_VAL;" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+					if [ $CPARM -eq 0 ]; then
+						PARMS_VALUES_LIST="$PARM_VAL"
+						let "CPARM++"
 					else
-						echo -e "        export $PARM=$PARM_VAL;;\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+						PARMS_VALUES_LIST="$PARMS_VALUES_LIST;$PARM_VAL"
 					fi
 				done
-			fi
+				#generate file
+				for PRODUCT in $(echo $PRODUCT_IDS | tr ";" "\n"); do
+					if [[ $PRODUCT == "$MODULE"* ]]; then
+						PROD_ID=$(echo $PRODUCT | cut -d "." -f2)
+						PROD_DESC=$(echo $PRODUCT | cut -d "." -f3)
+						echo -e "    #$PROD_DESC\n"\
+								"    $PROD_ID)" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
 
-		fi
-	done
+						if [ -z $TEST_PARM ]; then
+							echo -e "\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+						else
+							CPARM=0
+							for PARM in $(echo $TEST_PARM | tr ";" "\n"); do
+								#do the inner loop only once
+								if [ $CPARM -eq 0 ]; then
+									for PARM_VAL in $(echo $PARMS_VALUES_LIST | tr ";" "\n"); do
+										let "CPARM++"
+										if [ "$CPARM" -lt "$NPARMS" ]; then
+											echo -e "        export $PARM=$PARM_VAL;" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+										else
+											echo -e "        export $PARM=$PARM_VAL;;\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+										fi
+									done
+								fi
+							done
+						fi
+					fi
+				done;;
+		#one value for each of the SKUs
+		n|N ) 	for PRODUCT in $(echo $PRODUCT_IDS | tr ";" "\n"); do
+					if [[ $PRODUCT == "$MODULE"* ]]; then
+						PROD_ID=$(echo $PRODUCT | cut -d "." -f2)
+						PROD_DESC=$(echo $PRODUCT | cut -d "." -f3)
+						echo -e "    #$PROD_DESC\n"\
+								"    $PROD_ID)" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+
+						if [ -z $TEST_PARM ]; then
+							echo -e "\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+						else
+							CPARM=0
+							for PARM in $(echo $TEST_PARM | tr ";" "\n"); do
+								let "CPARM++"
+								read -p "Enter value for $PROD_DESC $PARM: " PARM_VAL
+								if [ "$CPARM" -lt "$NPARMS" ]; then
+									echo -e "        export $PARM=$PARM_VAL;" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+								else
+									echo -e "        export $PARM=$PARM_VAL;;\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+								fi
+							done
+						fi
+
+					fi
+				done;;
+		* ) echo "invalid choice, exiting..."; exit;;
+	esac
 	
 	echo -e "    *) false ;;\n"\
 			"esac" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
