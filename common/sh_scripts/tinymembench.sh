@@ -2,16 +2,16 @@
 
 set -x
 
+if [ -z $1 ]; then echo "no module name"; exit 1; fi
+source $(echo $1 | tr - _)/resources/tinymembench-threshold-values.sh
+if [ $? -ne 0 ]; then echo "wrong module ID or name"; exit 1; fi
+
 if [ -f $2 ]; then
 	lava-test-case tinymembench-logfile-exist --result pass
-
 else
 	lava-test-case tinymembench-logfile-exist --result fail
+	return 1
 fi
-
-if [ -z $1 ]; then echo "no module name"; exit 1; fi
-source $1/resources/tinymembench-threshold-values.sh
-if [ $? -ne 0 ]; then echo "wrong module ID or name"; exit 1; fi
 
 C_COPY=$(cat tinymembench.log | grep "C copy  " | awk '{print $4}' | cut -d "." -f1)
 C_FILL=$(cat tinymembench.log | grep "C fill  " | awk '{print $4}' | cut -d "." -f1)

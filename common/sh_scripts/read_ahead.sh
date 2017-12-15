@@ -3,7 +3,7 @@
 set -x
 
 if [ -z $1 ]; then echo "no module name"; exit 1; fi
-source $1/resources/read-ahead-threshold-values.sh
+source $(echo $1 | tr - _)/resources/read-ahead-threshold-values.sh
 if [ $? -ne 0 ]; then echo "wrong module ID or name"; exit 1; fi
 
 # MMC
