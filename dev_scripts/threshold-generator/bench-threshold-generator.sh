@@ -118,7 +118,7 @@ for MODULE in $(echo $MODULES_LIST | tr ";" "\n"); do
 		y|Y )	CPARM=0
 				#read values for all SKUs
 				for PARM in $(echo $TEST_PARM | tr ";" "\n"); do
-					read -p "Enter value for $PROD_DESC $PARM: " PARM_VAL
+					read -p "Enter value for $MODULE $PARM: " PARM_VAL
 					if [ $CPARM -eq 0 ]; then
 						PARMS_VALUES_LIST="$PARM_VAL"
 						let "CPARM++"
