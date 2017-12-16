@@ -11,6 +11,7 @@ All tests have only been tested on few modules so far, although they have been w
 - *<module_name>/resources*: keeps scripts that export min and max values for benchmarks, to be sourced in the benchmark scripts.
 - *common*: holds the lava test shell definitions used by the test job definitions.
 - *common/sh_scripts*: holds the shell scripts used by the test shell definitions.
+- *dev_scripts*: helper scripts for test writers.
 
 ### Tests and status
 
@@ -37,6 +38,10 @@ but should have more features.
 - [Flash resize](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/flash_resize.yaml): not working. Must wait until boot from flash is available. Must review for UBI based modules.
 - [Hdparm](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/hdparm.yaml): image tested does not have hdparm. Script works on Apalis iMX6. Benchmark acceptable range has to be reviewed. Must remove UBI based modules.
 
+### Dev scripts
+
+- [Bench threshold generator](https://github.com/leograba/lava-tests/blob/master/dev_scripts/threshold-generator/bench-threshold-generator.sh): Script that generates files with variables to be sourced in a benchmark script, such as flags or benchmark lower and upper limits. Files are generated for each module, e.g. Apalis iMX6 and each file contais variables for all SKUs, e.g. Apalis iMX6D 1GB.
+
 ### ToDo and tips
 
 - Update the scripts to use */proc/device-tree/toradex,product-id* to identify the module type.
@@ -48,3 +53,4 @@ should be available by default, e.g. *lava-test-case hdparm-available --shell hd
 - Add logfile to benchmark tests using lava-test-case-attach.
 - Consider migrating the benchmark expected values (min and max) for all tests to a single script that can be sourced.
 - Convert module name slash to underscore, and/or vice-versa
+- Attach benchmark results to tests, or at least add the measurement to the test pass. See common/nbench.yaml or common/sh_scripts/hdparm.sh for examples on both attachment or measurement.
