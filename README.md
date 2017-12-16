@@ -29,14 +29,14 @@ but should have more features.
 - [Smoke tests network](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/smoke-tests-network.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
 - [Opkg](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/opkg.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
 - [Read-ahead](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/read_ahead.yaml): image tested had default read-ahead size. Shell scripts work on Apalis iMX6. 
-- [Nbench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/nbench.yaml): image tested does not have nbench. Shell script work on Apalis iMX6. Benchmark acceptable range has to be reviewed.
+- [Nbench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/nbench.yaml): image tested does not have nbench. Shell script work on Apalis iMX6. Benchmark acceptable range has to be reviewed. Test download NNET.DAT, this should be checked for failure.
 - [Free RAM](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/free-ram.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
 - [Tinymembench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/tinymembench.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
 
 #### Unfinished and to be improved
 
-- [Flash resize](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/flash_resize.yaml): not working. Must wait until boot from flash is available. Must review for UBI based modules.
-- [Hdparm](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/hdparm.yaml): image tested does not have hdparm. Script works on Apalis iMX6. Benchmark acceptable range has to be reviewed. Must remove UBI based modules.
+- [Flash resize](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/flash_resize.yaml): not working. Must wait until boot from flash is available. Must review for UBI based modules. Ideally should monitor the resize process and run when it ends rather than just wait some random number of seconds.
+- [Hdparm](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/hdparm.yaml): image tested does not have hdparm. Script works on Apalis iMX6. Benchmark acceptable range has to be reviewed.
 
 ### Dev scripts
 
@@ -44,13 +44,9 @@ but should have more features.
 
 ### ToDo and tips
 
-- Update the scripts to use */proc/device-tree/toradex,product-id* to identify the module type.
 - Discuss whether benchmarks should have separate tests for min and max values, when testing a range.
 - Add a sanity check to the beginning of tests when a benchmark or command
 should be available by default, e.g. *lava-test-case hdparm-available --shell hdparm --help*.
 - Consider having a server with benchmarks and other binaries compiled for tests using the latest image/toolchain.
 - Go throught the upper/lower limits of the benchmarks and verify if they are feasible.
 - Add logfile to benchmark tests using lava-test-case-attach.
-- Consider migrating the benchmark expected values (min and max) for all tests to a single script that can be sourced.
-- Convert module name slash to underscore, and/or vice-versa
-- Attach benchmark results to tests, or at least add the measurement to the test pass. See common/nbench.yaml or common/sh_scripts/hdparm.sh for examples on both attachment or measurement.
