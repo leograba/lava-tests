@@ -1,0 +1,28 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: audio-tests
+    description: "Test the audio sound cards"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx7
+
+#install:
+#    git-repos:
+#        - https://github.com/leograba/lava-tests.git
+
+
+run:
+    steps:
+        - 'lava-test-case aplay-available --shell aplay --help'
+        - 'lava-test-case arecord-available --shell arecord --help'
+        - 'lava-test-case amixer-available --shell amixer --help'
+        - 'lava-test-case gst-playbin-available --shell gst-inspect playbin'
