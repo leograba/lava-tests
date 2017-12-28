@@ -139,17 +139,13 @@ for MODULE in $(echo $MODULES_LIST | tr ";" "\n"); do
 						else
 							CPARM=0
 							for PARM in $(echo $TEST_PARM | tr ";" "\n"); do
-								#do the inner loop only once
-								if [ $CPARM -eq 0 ]; then
-									for PARM_VAL in $(echo $PARMS_VALUES_LIST | tr ";" "\n"); do
-										let "CPARM++"
-										if [ "$CPARM" -lt "$NPARMS" ]; then
-											echo -e "        export $PARM=$PARM_VAL;" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
-										else
-											echo -e "        export $PARM=$PARM_VAL;;\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
-										fi
-									done
+								PARM_VAL=$(echo $PARMS_VALUES_LIST | cut -d ';' -f $CPARM)
+								if [ "$CPARM" -lt "$NPARMS" ]; then
+									echo -e "        export $PARM=$PARM_VAL;" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
+								else
+									echo -e "        export $PARM=$PARM_VAL;;\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
 								fi
+								let "CPARM++"
 							done
 						fi
 					fi
