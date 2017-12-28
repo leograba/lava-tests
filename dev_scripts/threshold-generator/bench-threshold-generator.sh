@@ -137,10 +137,10 @@ for MODULE in $(echo $MODULES_LIST | tr ";" "\n"); do
 						if [ -z $TEST_PARM ]; then
 							echo -e "\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
 						else
-							CPARM=0
+							CPARM=1
 							for PARM in $(echo $TEST_PARM | tr ";" "\n"); do
 								PARM_VAL=$(echo $PARMS_VALUES_LIST | cut -d ';' -f $CPARM)
-								if [ "$CPARM" -lt "$NPARMS" ]; then
+								if [ "$CPARM" -ne "$NPARMS" ]; then
 									echo -e "        export $PARM=$PARM_VAL;" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
 								else
 									echo -e "        export $PARM=$PARM_VAL;;\n" >> $PRJ_PATH$MODULE/resources/$TEST_FILE
