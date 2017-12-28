@@ -1,0 +1,29 @@
+metadata:
+    format: Lava-Test Test Definition 1.0
+    name: audio-sound-cards
+    description: "Check if all audio sound cards are available"
+    maintainer:
+        - leogveiga@gmail.com
+    os:
+        - oe
+    scope:
+        - functional
+    devices:
+        - apalis-imx6
+        - apalis-t30
+        - apalis-tk1
+        - colibri-imx6
+        - colibri-imx7
+
+#install:
+#    git-repos:
+#        - https://github.com/leograba/lava-tests.git
+
+
+run:
+    steps:
+        - 'ARGS=`uname -a | cut -d '' '' -f2`'
+        - './common/sh_scripts/audio-sound-cards.sh $ARGS'
+        - 'if [ $? -eq 0 ] ; then'
+        - 'lava-test-case run-audio-sound-cards --result pass'
+        - 'else lava-test-case run-audio-sound-cards --result fail ; fi'
