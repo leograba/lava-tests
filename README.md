@@ -21,22 +21,24 @@ but should have more features.
 
 #### Tested and working
 
-- [Smoke tests basic](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/smoke-tests-basic.yaml): working.
-- [Basic shell script](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/basic-shell-script.yaml): working.
+- [Smoke tests basic](https://github.com/leograba/lava-tests/blob/master/common/smoke-tests-basic.yaml): working.
+- [Basic shell script](https://github.com/leograba/lava-tests/blob/master/common/basic-shell-script.yaml): working.
 
 #### Script working on module without LAVA
 
-- [Smoke tests network](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/smoke-tests-network.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
-- [Opkg](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/opkg.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
-- [Read-ahead](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/read_ahead.yaml): image tested had default read-ahead size. Shell scripts work on Apalis iMX6. 
-- [Nbench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/nbench.yaml): image tested does not have nbench. Shell script work on Apalis iMX6. Benchmark acceptable range has to be reviewed. Test download NNET.DAT, this should be checked for failure.
-- [Free RAM](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/free-ram.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
-- [Tinymembench](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/tinymembench.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
+- [Smoke tests network](https://github.com/leograba/lava-tests/blob/master/common/smoke-tests-network.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
+- [Basic opkg](https://github.com/leograba/lava-tests/blob/master/common/basic-opkg.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
+- [Basic opkg Python](https://github.com/leograba/lava-tests/blob/master/common/basic-opkg-python.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
+- [Basic opkg largepull](https://github.com/leograba/lava-tests/blob/master/common/basic-opkg-largepull.yaml): the board has no internet access yet. Shell scripts work on Apalis iMX6.
+- [Read-ahead](https://github.com/leograba/lava-tests/blob/master/common/read_ahead.yaml): image tested had default read-ahead size. Shell scripts work on Apalis iMX6. 
+- [Nbench](https://github.com/leograba/lava-tests/blob/master/common/nbench.yaml): image tested does not have nbench. Shell script work on Apalis iMX6. Benchmark acceptable range has to be reviewed. Test download NNET.DAT, this should be checked for failure.
+- [Free RAM](https://github.com/leograba/lava-tests/blob/master/common/free-ram.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
+- [Tinymembench](https://github.com/leograba/lava-tests/blob/master/common/tinymembench.yaml): not tested using LAVA. Shell script works on Colibri iMX7. Benchmark acceptable range has to be reviewed.
 
 #### Unfinished and to be improved
 
-- [Flash resize](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/flash_resize.yaml): not working. Must wait until boot from flash is available. Must review for UBI based modules. Ideally should monitor the resize process and run when it ends rather than just wait some random number of seconds.
-- [Hdparm](https://github.com/leograba/lava-tests/blob/master/apalis_imx6/hdparm.yaml): image tested does not have hdparm. Script works on Apalis iMX6. Benchmark acceptable range has to be reviewed.
+- [Flash resize](https://github.com/leograba/lava-tests/blob/master/common/flash_resize.yaml): not working. Must wait until boot from flash is available. Must review for UBI based modules. Ideally should monitor the resize process and run when it ends rather than just wait some random number of seconds.
+- [Hdparm](https://github.com/leograba/lava-tests/blob/master/common/hdparm.yaml): image tested does not have hdparm. Script works on Apalis iMX6. Benchmark acceptable range has to be reviewed.
 
 ### Dev scripts
 
