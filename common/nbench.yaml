@@ -33,6 +33,9 @@ run:
 		- 'ARG1=`uname -a | cut -d '' '' -f2`'
         - 'ARG2=nbench.log'
         - 'lava-test-case-attach run-nbench $ARG1 $ARG2'
-        - './common/sh_scripts/nbench.sh nbench.log'
+        - './common/sh_scripts/nbench.sh $ARG1 nbench.log'
+        - 'if [ $? -eq 0 ] ; then'
+        - 'lava-test-case run-nbench-script --result pass'
+        - 'else lava-test-case run-nbench-script --result fail ; fi'
         - 'else lava-test-case run-nbench --result fail ; fi'
 
